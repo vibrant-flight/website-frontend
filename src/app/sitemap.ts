@@ -33,3 +33,11 @@
 //     ...productUrls,
 //   ];
 // }
+export default async function sitemap() {
+    return [
+        {
+            url: "https://vibrantflight.in",
+            lastModified: new Date(),
+        }
+    ]
+}
