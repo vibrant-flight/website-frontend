@@ -48,7 +48,7 @@ export default function Home() {
       <div className="flex flex-row justify-evenly overflow-x-auto gap-4 py-2 px-2 md:justify-evenly scrollbar-hide">
         <div className='text-white flex flex-col items-center min-w-[100px]'>
           <Link href={"/products?category=tshirts"}>
-            <Image src="/categories/tshirts.avif" width={100} height={100} alt="Tshirts" className="rounded-full w-24 h-24 overflow-hidden hover:cursor-pointer" />
+            <Image src="/categories/tshirts.webp" width={100} height={100} alt="Tshirts" className="rounded-full w-24 h-24 overflow-hidden hover:cursor-pointer" />
           </Link>
           Tshirts
         </div>
@@ -72,7 +72,7 @@ export default function Home() {
         </div>
         <div className='text-white flex flex-col items-center min-w-[100px]'>
           <Link href={"/products?category=overtees"}>
-            <Image src="/categories/Oversized T.webp" width={100} height={100} alt="Oversized T's" className='rounded-full w-24 h-24 overflow-hidden hover:cursor-pointer'></Image>
+            <Image src="/categories/overtees.webp" width={100} height={100} alt="Oversized T's" className='rounded-full w-24 h-24 overflow-hidden hover:cursor-pointer'></Image>
           </Link>
           OverSized T's
         </div>
