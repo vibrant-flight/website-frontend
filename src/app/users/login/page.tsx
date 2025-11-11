@@ -86,7 +86,7 @@ export default function Login() {
           </div>
           <div>
             <span>
-              <Link href="/users/forgot-password" className='underline text-white'>Forgot Password</Link>
+              <Link href="/users/reset-password" className='underline text-white'>Forgot Password</Link>
             </span>
           </div>
           <button type="button" onClick={logIn} className="w-full bg-amber-600 hover:bg-amber-700 hover:cursor-pointer text-white font-bold py-2 px-4 rounded transition">

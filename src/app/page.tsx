@@ -8,6 +8,8 @@ import Link from 'next/link';
 const images = [
   '/carousel/1.jpg',
   '/carousel/2.jpg',
+  '/carousel/3.jpg',
+  '/carousel/4.jpg',
 ]
 export default function Home() {
   const [products,setProducts] = useState<ItemView[]>([] as ItemView[]);
@@ -35,10 +37,10 @@ export default function Home() {
   },[])
   return (
     <>
-      <Carousel showThumbs={false} showArrows={false} showIndicators={false} autoPlay={true} infiniteLoop>
+      <Carousel showThumbs={false} showArrows={true} showIndicators={false} autoPlay={true} infiniteLoop>
         {images.map((src, idx) => (
           <div key={idx}>
-            <Image src={src} alt={`Carousel image ${idx + 1}`} width={500} height={100} className='' />
+            <Image src={src} alt={`Carousel image ${idx + 1}`} width={500} height={100} className='w-100 h-100 md:h-150' />
           </div>
         ))}
       </Carousel>
