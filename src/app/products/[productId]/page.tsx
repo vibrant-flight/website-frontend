@@ -71,13 +71,13 @@ export default function ProductPage() {
                     <div className="space-y-4">
                         <div className="relative aspect-square rounded-lg overflow-hidden bg-gray-800">
                             {imageList[selectedImage] && (
-                                <Image src={imageList[selectedImage]} alt={product.name || ''} fill className="object-cover" priority />
+                                <Image src={imageList[selectedImage]} alt={product.name || ''} fill className="object-fit" priority />
                             )}
                         </div>
                         <div className="grid grid-cols-4 gap-4">
                             {imageList.filter(img => img).map((img, idx) => (
                                 <button key={idx} onClick={() => setSelectedImage(idx)} className={`relative aspect-square rounded-md overflow-hidden ${selectedImage === idx ? 'ring-2 ring-blue-500' : ''}`}>
-                                    <Image src={img} alt={`Product ${idx + 1}`} fill className="object-cover" />
+                                    <Image src={img} alt={`Product ${idx + 1}`} fill className="object-fit" />
                                 </button>
                             ))}
                         </div>
