@@ -110,6 +110,9 @@ export default function Cart() {
                         <img src={item.image} alt={item.itemId} loading="lazy" className="w-24 h-30 object-cover rounded-md mr-5" />
                         <div className="flex-1">
                             <div className="my-2 text-gray-300">
+                              {item.name}
+                            </div>
+                            <div className="my-2 text-gray-300">
                               Size: <b>{item.selectedSize}</b>
                             </div>
                             <div className="my-2 text-gray-300">

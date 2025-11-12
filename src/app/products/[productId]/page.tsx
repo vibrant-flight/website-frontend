@@ -124,9 +124,7 @@ export default function ProductPage() {
                                         </div>
                                         {(() => {
                                             const sizeMap = (product.size as Record<string, number> | undefined) || {};
-                                            const available = selectedProduct.selectedSize
-                                                ? (sizeMap[selectedProduct.selectedSize] ?? 0)
-                                                : Object.values(sizeMap).reduce((a, b) => a + (b ?? 0), 0);
+                                            const available = selectedProduct.selectedSize?(sizeMap[selectedProduct.selectedSize] ?? 0):0;
 
                                             const qty = selectedProduct.quantity ?? 0;
 
