@@ -101,7 +101,7 @@ export default function Products() {
                     ) : products?.length > 0 ? (
                         products.map((product) => (
                             <Link key={product.itemId} href={`/products/${product.itemId}`}>
-                                <div className="group flex flex-col items-center bg-neutral-700 rounded-xl shadow-xl overflow-hidden w-full transition hover:scale-[1.03] aspect-auto">
+                                <div className="group flex flex-col bg-neutral-700 rounded-xl shadow-xl overflow-hidden w-full transition hover:scale-[1.03] aspect-auto">
                                     <div className="relative w-full h-44 md:h-52 lg:h-56 xl:h-60 overflow-hidden">
                                         {product.size.S==0 && product.size.M==0 && product.size.L==0 && product.size.XL==0 && product.size.XL==0 && product.size.XXXL==0 ? 
                                             (
