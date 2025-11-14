@@ -62,7 +62,7 @@ export default function Products() {
     }
 
     return (
-        <div className="bg-neutral-800 flex min-h-screen">
+        <div className="bg-neutral-800 flex">
             <main className="flex-1 flex flex-col items-center px-4 py-6 z-0 w-full">
                 <div className="w-full flex justify-around overflow-x-auto gap-4 mb-6 px-2 py-2 scroll-smooth scrollbar-hide">
                     {categories.filter(c => c.key !== "all").map(({ key, label }) => {
@@ -87,7 +87,7 @@ export default function Products() {
                         );
                     })}
                 </div>
-                <div className="m-auto grid gap-6 w-full grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5">
+                <div className="m-auto grid gap-6 w-full items-center grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5">
                     {isLoading && products.length === 0 ? (
                         Array(8).fill(null).map((_, i) => (
                             <div key={i} className="flex flex-col bg-neutral-700 rounded-xl shadow-lg overflow-hidden w-full animate-pulse">
