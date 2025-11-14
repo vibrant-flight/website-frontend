@@ -26,23 +26,22 @@ export default function Navbar() {
     }, [isProfileDropDownMenu]);
     return (
       <div className="bg-neutral-900 font-[interblack] border-neutral-700">
-        <div className="flex justify-between items-center md:hidden">
-          <div className='text-white m-auto font-[interblack] text-3xl px-3 font-bold text-shadow-xl italic'>
-            <Image src="/logo.png" width="100" height="100" className='w-10' alt="Logo"></Image>
+        <div className="flex flex-row justify-between items-center md:hidden">
+          <div className="flex items-center">
+            <Image src="/logo.png" width={100} height={100} className="w-10" alt="Logo" />
           </div>
-          {Object.keys(auth.userData).length > 0 ? (
-            <>
-              <div>
+          <div className="flex items-center">
+            <Image src="/banner.png" alt="banner" width={200} height={200} />
+          </div>
+          {Object.keys(auth.userData).length > 0 && (
+            <div className="flex items-center">
               <Link href="/users/cart" onClick={() => setIsMobileDropdownVisible(false)}>
-                <div className='mx-2 font-bold hover:bg-yellow-700 hover:cursor-pointer text-white'>
-                  <FontAwesomeIcon icon={faCartArrowDown} className='text-white px-2' />
-                </div>
+                <FontAwesomeIcon icon={faCartArrowDown} className="text-white text-xl mx-2 hover:bg-yellow-700" />
               </Link>
             </div>
-            </>
-          ):(<></>)}
-          <div className='md:hidden'>
-            <FontAwesomeIcon icon={faBars} onClick={() => setIsMobileDropdownVisible(prev=>!prev)} className="text-2xl text-white mr-2 hover:cursor-pointer" />
+          )}
+          <div className="flex items-center md:hidden">
+            <FontAwesomeIcon icon={faBars} onClick={() => setIsMobileDropdownVisible(prev => !prev)} className="text-2xl text-white mr-2 hover:cursor-pointer" />
           </div>
         </div>
         <div className={`${isMobileDropdownVisible ? 'flex' : 'hidden'} md:hidden flex-col`} id='mobile-dropdown'>

@@ -7,7 +7,7 @@ const TermsOfService = () => {
 
       <h2 className="text-xl font-semibold text-white mt-6 mb-2">Overview</h2>
       <p className="text-white mb-4">
-        This website is operated by <strong>Vibrant Flight</strong>. Throughout the site, the terms "we", "us", and "our" refer to Gerado. Gerado offers this website, including all
+        This website is operated by <strong>Vibrant Flight</strong>. Throughout the site, the terms "we", "us", and "our" refer to Vibtant. Vibrant offers this website, including all
         information, tools, and services available from this site to you, the user, conditioned upon your acceptance of all terms, conditions, policies, and
         notices stated here.
       </p>

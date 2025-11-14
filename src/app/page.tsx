@@ -37,7 +37,7 @@ export default function Home() {
   },[])
   return (
     <>
-      <Carousel showThumbs={false} showArrows={true} showIndicators={false} autoPlay={true} infiniteLoop>
+      <Carousel showThumbs={false} showArrows={false} showIndicators={false} autoPlay={true} infiniteLoop>
         {images.map((src, idx) => (
           <div key={idx}>
             <Image src={src} alt={`Carousel image ${idx + 1}`} width={500} height={100} className='w-100 h-100 md:h-150' />
@@ -90,7 +90,7 @@ export default function Home() {
                             <span className="absolute top-2 right-2 z-20 px-3 py-1 text-xs font-bold rounded-full bg-red-700 text-white shadow-md">Sold Out</span>
                           ):(<></>)
                         }
-                        <Image src={product.image} alt={product.name} loading="lazy" fill sizes="(max-width:600px) 45vw, 18vw" className="object-cover w-full h-full transition group-hover:scale-[1.08]" />
+                        <Image src={product.image} alt={product.name} loading="lazy" fill className="object-fit w-full h-full transition group-hover:scale-[1.08]" />
                       </div>
                       <div className="bg-neutral-600 text-white w-full text-center px-2 py-3">
                         <h3 className="text-base font-bold truncate">{product.name}</h3>

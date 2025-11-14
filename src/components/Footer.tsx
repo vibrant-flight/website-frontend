@@ -1,12 +1,12 @@
 import { FaInstagram, FaFacebookF, FaYoutube } from "react-icons/fa";
 import Link from "next/link";
+import Image from "next/image";
 export default function Footer() {
   return (
     <footer className="w-full bg-black text-gray-300 py-12 px-6 md:px-16 border-t border-gray-800">
       <div className="max-w-7xl mx-auto grid grid-cols-1 md:grid-cols-3 gap-12">
         <div>
-          <h2 className="text-2xl font-bold text-yellow-400">Vibrant Flight</h2>
-          <p className="italic mt-1 text-sm">Elevate Your Journey</p>
+          <Image src={"/banner.png"} alt="banne" width={200} height={200}></Image>
           <p className="mt-4 text-sm leading-relaxed max-w-sm">
             Premium clothing & accessories — curated essentials & seasonal drops.
           </p>
@@ -34,18 +34,18 @@ export default function Footer() {
         <div>
           <h3 className="text-xl font-semibold mb-3">Contact</h3>
           <p className="text-sm mb-4">sandeeps21788@gmail.com</p>
-
           <h3 className="text-xl font-semibold mb-3">Follow</h3>
           <div className="flex items-center space-x-4">
-            <div className="w-10 h-10 rounded-full border border-gray-600 flex items-center justify-center hover:border-white cursor-pointer">
-              <FaInstagram />
-            </div>
-            <div className="w-10 h-10 rounded-full border border-gray-600 flex items-center justify-center hover:border-white cursor-pointer">
-              <FaFacebookF />
-            </div>
-            <div className="w-10 h-10 rounded-full border border-gray-600 flex items-center justify-center hover:border-white cursor-pointer">
-              <FaYoutube />
-            </div>
+            <Link href={"https://www.instagram.com/vibrant_flight?igsh=N3VycHZybG16c3M1"}>
+              <div className="w-10 h-10 rounded-full border border-gray-600 flex items-center justify-center hover:border-white cursor-pointer">
+                <FaInstagram />
+              </div>
+            </Link>
+            <Link href={"https://youtube.com/@vibrant_flight.00?si=tiG3zoWoCefIjqnO"}>
+              <div className="w-10 h-10 rounded-full border border-gray-600 flex items-center justify-center hover:border-white cursor-pointer">
+                <FaYoutube />
+              </div>
+            </Link>
           </div>
         </div>
       </div>
