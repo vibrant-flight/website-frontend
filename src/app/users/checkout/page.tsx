@@ -58,81 +58,80 @@ export default function CheckOut() {
         };
     }, []);
     const handlePayment = async () => {
-        alert("We are activelu working on adding payment integration");
-        // if (!mobile || !address) {
-        //     alert("Please enter mobile number and delivery address");
-        //     return;
-        // }
-        // try {
-        //     const response = await fetch(`${process.env.NEXT_PUBLIC_BACKEND_URL}/api/cart/create-order`,{
-        //         method:"POST",
-        //         headers: {
-        //             "content-type":"application/json",
-        //         },
-        //         body:JSON.stringify({"amount":grandTotal*100}),
-        //         credentials:"include"
-        //     });
-        //     const data = await response.json();
-        //     const { order } = data;
-        //     const options = {
-        //         key: process.env.NEXT_PUBLIC_RAZORPAY_KEY_ID,
-        //         amount: order.amount,
-        //         currency: "INR",
-        //         name: "Vibrant",
-        //         description: "Order Payment",
-        //         order_id: order.id,
-        //         handler: async function (response:any) {
-        //             try {
-        //                 const verifyResponse = await fetch(`${process.env.NEXT_PUBLIC_BACKEND_URL}/api/cart/verify-payment`,{
-        //                     method:"POST",
-        //                     headers: {
-        //                         "content-type":"application/json",
-        //                     },
-        //                     body:JSON.stringify({order_id: response.razorpay_order_id,
-        //                         payment_id: response.razorpay_payment_id,
-        //                         signature: response.razorpay_signature,
-        //                         mobile:mobile,
-        //                         address:address,
-        //                         pinCode:pinCode,
-        //                         totalAmount:grandTotal,
-        //                         userData:auth.userData,
-        //                     }),
-        //                     credentials:"include",
-        //                 });
-        //                 const verification = await verifyResponse.json();            
-        //                 if (verification.success) {
-        //                     await fetch(`${process.env.NEXT_PUBLIC_BACKEND_URL}/api/cart/clear-cart`,{method:"PATCH",headers: {"content-type":"application/json"},credentials:"include",});
-        //                     router.push("/payments/success");
-        //                 } 
-        //                 else {
-        //                     router.push("/payments/failure");
-        //                 }
-        //             } 
-        //             catch (err) {
-        //                 console.error("Payment verification error:", err);
-        //                 router.push("/payments/failure");
-        //             }
-        //             },
-        //             prefill: {
-        //                 name: `${auth.userData.firstName} ${auth.userData.lastName}`,
-        //                 email: auth.userData.email,
-        //                 contact: mobile,
-        //             },
-        //             theme: {
-        //             color: "#EBD176",       
-        //             },
-        //             modal: {
-        //             ondismiss: function() {
-        //                 router.push("/payments/failure");
-        //             }
-        //         }
-        //     };
-        //     const rzp = new window.Razorpay(options);
-        //     rzp.open();
-        // } 
-        // catch (err:any) {
-        //     alert("Error creating order: " + err.message);
-        // }
+        if (!mobile || !address) {
+            alert("Please enter mobile number and delivery address");
+            return;
+        }
+        try {
+            const response = await fetch(`${process.env.NEXT_PUBLIC_BACKEND_URL}/api/cart/create-order`,{
+                method:"POST",
+                headers: {
+                    "content-type":"application/json",
+                },
+                body:JSON.stringify({"amount":grandTotal*100}),
+                credentials:"include"
+            });
+            const data = await response.json();
+            const { order } = data;
+            const options = {
+                key: process.env.NEXT_PUBLIC_RAZORPAY_KEY_ID,
+                amount: order.amount,
+                currency: "INR",
+                name: "Vibrant",
+                description: "Order Payment",
+                order_id: order.id,
+                handler: async function (response:any) {
+                    try {
+                        const verifyResponse = await fetch(`${process.env.NEXT_PUBLIC_BACKEND_URL}/api/cart/verify-payment`,{
+                            method:"POST",
+                            headers: {
+                                "content-type":"application/json",
+                            },
+                            body:JSON.stringify({order_id: response.razorpay_order_id,
+                                payment_id: response.razorpay_payment_id,
+                                signature: response.razorpay_signature,
+                                mobile:mobile,
+                                address:address,
+                                pinCode:pinCode,
+                                totalAmount:grandTotal,
+                                userData:auth.userData,
+                            }),
+                            credentials:"include",
+                        });
+                        const verification = await verifyResponse.json();            
+                        if (verification.success) {
+                            await fetch(`${process.env.NEXT_PUBLIC_BACKEND_URL}/api/cart/clear-cart`,{method:"PATCH",headers: {"content-type":"application/json"},credentials:"include",});
+                            router.push("/payments/success");
+                        } 
+                        else {
+                            router.push("/payments/failure");
+                        }
+                    } 
+                    catch (err) {
+                        console.error("Payment verification error:", err);
+                        router.push("/payments/failure");
+                    }
+                    },
+                    prefill: {
+                        name: `${auth.userData.firstName} ${auth.userData.lastName}`,
+                        email: auth.userData.email,
+                        contact: mobile,
+                    },
+                    theme: {
+                    color: "#EBD176",       
+                    },
+                    modal: {
+                    ondismiss: function() {
+                        router.push("/payments/failure");
+                    }
+                }
+            };
+            const rzp = new window.Razorpay(options);
+            rzp.open();
+        } 
+        catch (err:any) {
+            alert("Error creating order: " + err.message);
+        }
     };
     const handleCashOnDelivery = async() => {
         try {
