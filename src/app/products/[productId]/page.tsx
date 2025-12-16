@@ -65,7 +65,7 @@ export default function ProductPage() {
         }
     }
     return (
-        <div className="min-h-screen bg-gray-900 text-gray-100">
+        <div className="min-h-screen bg-neutral-800 text-gray-100">
             <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
                     <div className="space-y-4">
@@ -86,15 +86,16 @@ export default function ProductPage() {
                         <h1 className="text-3xl font-bold">{product.name}</h1>
                         <div className="flex items-baseline space-x-4">
                             {typeof product.actualPrice === 'number' && typeof product.price === 'number' && product.actualPrice > product.price ? (
-                            <>
-                                <span className="text-lg text-gray-400 line-through">₹{product.actualPrice.toFixed(2)}</span>
-                                <span className="text-2xl font-bold">₹{product.price.toFixed(2)}</span>
-                            </>
+                                <>
+                                    <span className="text-lg text-gray-400 line-through">₹{product.actualPrice.toFixed(2)}</span>
+                                    <span className="text-2xl font-bold">₹{product.price.toFixed(2)}</span>
+                                </>
                             ) : (
                                 <span className="text-2xl font-bold">₹{(product.price ?? product.actualPrice ?? 0).toFixed(2)}</span>
                             )}
+                            <span className='text-green-500 italic text-2xl'>*Free Delivery</span>
                         </div>
-                        <p className="text-gray-400">{product.description}</p>
+                        <p className="text-gray-200">{product.description}</p>
                         <div className="space-y-4">
                             {(() => {
                                 const entries = Object.entries(product.size || {});

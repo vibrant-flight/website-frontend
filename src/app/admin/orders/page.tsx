@@ -90,35 +90,35 @@ export default function AdminOrders() {
   };
   return (
     <div className="p-6">
-      <h2 className="text-2xl font-bold mb-4 dark:text-white">Orders</h2>
+      <h2 className="text-xl font-bold mb-4 dark:text-white">Orders</h2>
       <div className="overflow-x-auto">
         <table className="min-w-full bg-white dark:bg-gray-700 dark:text-white rounded-lg">
           <thead className="bg-neutral-800 text-white">
             <tr>
-              <th className="px-4 py-2">Order ID</th>
-              <th className="px-4 py-2">Payment ID</th>
-              <th className="px-4 py-2">Email</th>
-              <th className="px-4 py-2">Mobile</th>
-              <th className="px-4 py-2">Address</th>
-              <th className="px-4 py-2">Pin Code</th>
-              <th className="px-4 py-2">Items</th>
-              <th className="px-4 py-2">Amount</th>
-              <th className="px-4 py-2">Status</th>
-              <th className="px-4 py-2">Tracking Id</th>
-              <th className="px-4 py-2">Dispatch</th>
+              <th className="px-1 py-2">Order ID</th>
+              <th className="px-1 py-2">Payment ID</th>
+              <th className="px-1 py-2">Email</th>
+              <th className="px-1 py-2">Mobile</th>
+              <th className="px-1 py-2">Address</th>
+              <th className="px-1 py-2">Pin Code</th>
+              <th className="px-1 py-2">Items</th>
+              <th className="px-1 py-2">Amount</th>
+              <th className="px-1 py-2">Status</th>
+              <th className="px-1 py-2">Tracking Id</th>
+              <th className="px-1 py-2">Dispatch</th>
             </tr>
           </thead>
           <tbody className="dark:bg-neutral-700 dark:text-white">
             {orders &&
               orders.map((order) => (
                 <tr key={order.orderId}>
-                  <td className="px-4 py-2">{order.orderId}</td>
-                  <td className="px-4 py-2">{order.paymentId}</td>
-                  <td className="px-4 py-2">{order.email}</td>
-                  <td className="px-4 py-2">{order.mobile}</td>
-                  <td className="px-4 py-2">{order.address}</td>
-                  <td className="px-4 py-2">{order.pinCode}</td>
-                  <td className="px-4 py-2">
+                  <td className="px-1 py-2">{order.orderId}</td>
+                  <td className="px-1 py-2">{order.paymentId}</td>
+                  <td className="px-1 py-2">{order.email}</td>
+                  <td className="px-1 py-2">{order.mobile}</td>
+                  <td className="px-1 py-2">{order.address}</td>
+                  <td className="px-1 py-2">{order.pinCode}</td>
+                  <td className="px-1 py-2">
                     <ul>
                       {order.items.map((item) => (
                         <li

@@ -2,17 +2,20 @@
 import { Carousel } from 'react-responsive-carousel'; 
 import 'react-responsive-carousel/lib/styles/carousel.min.css'
 import Image from 'next/image';
-import { useEffect, useState } from 'react';
+import { useContext, useEffect, useState } from 'react';
 import { ItemView } from '@/utils/items/itemView';
 import Link from 'next/link';
+import { AuthContext } from '@/components/AuthProvider';
+import SuggestedProducts from '@/components/SuggestedProducts';
 const images = [
-  '/carousel/1.jpg',
-  '/carousel/2.jpg',
-  '/carousel/3.jpg',
-  '/carousel/4.jpg',
+  '/carousel/1.png',
+  '/carousel/2.png',
+  '/carousel/3.png',
+  '/carousel/4.png',
 ]
 export default function Home() {
   const [products,setProducts] = useState<ItemView[]>([] as ItemView[]);
+  const auth = useContext(AuthContext);
   const loadProducts = (isInitial = false) => {
     fetch(`${process.env.NEXT_PUBLIC_BACKEND_URL}/get-items`, {
         method: 'GET',
@@ -32,18 +35,37 @@ export default function Home() {
       }
     }).catch((err) => console.log("Error:", err));
   };
+  const trackProductClick = async(productId:string) => {
+    try {
+      await auth.getData();
+      await fetch(`${process.env.NEXT_PUBLIC_BACKEND_URL}/api/users/track/product-click`, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json"
+        },
+        credentials: "include", 
+        body: JSON.stringify({
+          productId,
+          email:auth.userData.email,
+        })
+      });
+    } catch (err) {
+      console.error("Click tracking failed", err);
+    }
+  }
   useEffect(()=>{
     loadProducts();
   },[])
   return (
     <>
-      <Carousel showThumbs={false} showArrows={false} showIndicators={false} autoPlay={true} infiniteLoop>
+      <Carousel showThumbs={false} showArrows={false} showIndicators={false} autoPlay={true} infiniteLoop className='max-w-lg m-auto'>
         {images.map((src, idx) => (
           <div key={idx}>
-            <Image src={src} alt={`Carousel image ${idx + 1}`} width={500} height={100} className='w-100 h-100 md:h-150' />
+            <Image src={src} alt={`Carousel image ${idx + 1}`} width={500} height={100} className='w-100 max-w-lg h-100 md:h-150' />
           </div>
         ))}
       </Carousel>
+      <SuggestedProducts />
       <div className="bg-neutral-800 w-fit mx-auto my-5 text-yellow-300 text-center rounded-full px-6 font-bold">
         DROP I Live NOW
       </div>
@@ -82,7 +104,7 @@ export default function Home() {
       <div className="m-auto grid gap-6 w-full max-w-7xl grid-cols-2 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5">
         {products && products.length > 0 ? (
           products.map((product) => (
-              <Link key={product.itemId} href={`/products/${product.itemId}`}>
+              <Link key={product.itemId} onClick={() => trackProductClick(product.itemId)} href={`/products/${product.itemId}`}>
                   <div className="group flex flex-col items-center bg-neutral-700 rounded-xl shadow-xl overflow-hidden w-full transition hover:scale-[1.03] aspect-auto">
                       <div className="relative w-full h-44 md:h-52 lg:h-56 xl:h-60 overflow-hidden">
                         {product.size.S==0 && product.size.M==0 && product.size.L==0 && product.size.XL==0 && product.size.XL==0 && product.size.XXXL==0 ? 

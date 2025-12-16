@@ -13,7 +13,6 @@ export default function CheckOut() {
     const [mobile, setMobile] = useState<string>("");
     const [address, setAddress] = useState<string>("");
     const [pinCode, setPinCode] = useState<string>("");
-    const deliveryCharge = 50;
     const [totalAmount, setTotalAmount] = useState(0);
     const [grandTotal, setGrandTotal] = useState(0);
     const auth = useContext(AuthContext)
@@ -25,7 +24,7 @@ export default function CheckOut() {
                 0
             );
             setTotalAmount(t);
-            setGrandTotal(t + deliveryCharge);
+            setGrandTotal(t);
         }
     }, [products]);
     useEffect(() => {
@@ -201,10 +200,6 @@ export default function CheckOut() {
                     className="w-full mt-1 p-2 rounded border outline-none bg-gray-800 text-white border-gray-600"
                 />
                 </label>
-            </div>
-            <div className="flex justify-between mt-3">
-                <span>Delivery Charge:</span>
-                <span>₹ {deliveryCharge.toFixed(2)}</span>
             </div>
             <div className="flex justify-between mt-3 font-bold">
                 <span>Grand Total:</span>
