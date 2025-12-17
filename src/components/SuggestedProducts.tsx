@@ -6,7 +6,7 @@ import { AuthContext } from "./AuthProvider";
 import Image from "next/image";
 import Link from "next/link";
 import { ItemView } from "@/utils/items/itemView";
-const ITEMS_PER_PAGE = 3;
+const ITEMS_PER_PAGE = 1;
 export default function SuggestedProducts() {
     const [products, setProducts] = useState<ItemView[]>([]);
     const [page, setPage] = useState(0);
@@ -50,56 +50,50 @@ export default function SuggestedProducts() {
                 Continue Exploring
                 </span>
             </div>
-            <div className="relative">
-                <button
-                    onClick={prev}
-                    disabled={page === 0}
-                    aria-label="Previous products"
-                    className="hidden md:flex items-center justify-center absolute -left-6 top-1/2 -translate-y-1/2 z-10 
-                            h-10 w-10 rounded-full bg-white shadow-lg 
-                            hover:bg-gray-100 transition disabled:opacity-30"
-                >
-                    <FontAwesomeIcon icon={faChevronLeft} />
-                </button>
-                <div className="grid grid-cols-2 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-5">
+            <div className="relative max-w-5xl mx-auto">
                 {currentProducts.map((product) => {
                     const soldOut =
-                    product.size.S === 0 &&
-                    product.size.M === 0 &&
-                    product.size.L === 0 &&
-                    product.size.XL === 0 &&
-                    product.size.XXL === 0 &&
-                    product.size.XXXL === 0;
-
+                        product.size.S === 0 &&
+                        product.size.M === 0 &&
+                        product.size.L === 0 &&
+                        product.size.XL === 0 &&
+                        product.size.XXL === 0 &&
+                        product.size.XXXL === 0;
                     return (
                         <Link key={product.itemId} href={`/products/${product.itemId}`}>
-                            <div className="group bg-neutral-800 rounded-2xl overflow-hidden shadow-md hover:shadow-xl transition-transform hover:-translate-y-1">
-                                <div className="relative aspect-[3/4] overflow-hidden">
+                            <div className="group flex bg-neutral-800 rounded-2xl overflow-hidden shadow-xl hover:shadow-2xl transition min-h-[260px]">
+                                <div className="relative w-[220px] sm:w-[260px] shrink-0">
                                     {soldOut && (
-                                    <span className="absolute top-3 right-3 z-10 bg-red-700 text-white text-xs px-3 py-1 rounded-full font-semibold">
-                                        Sold Out
-                                    </span>
+                                        <span className="absolute top-3 left-3 z-10 bg-red-600 text-white text-xs px-3 py-1 rounded-full">
+                                            Sold Out
+                                        </span>
                                     )}
-                                    <Image
-                                    src={product.image}
-                                    alt={product.name}
-                                    fill
-                                    loading="lazy"
-                                    className="object-cover transition-transform duration-300 group-hover:scale-110"
-                                    />
+                                    <Image src={product.image} alt={product.name} fill className="object-cover group-hover:scale-105 transition-transform duration-300"/>
                                 </div>
-                                <div className="bg-neutral-700 text-white text-center px-3 py-4">
-                                    <h3 className="text-sm sm:text-base font-semibold truncate">
-                                    {product.name}
+                                <div className="flex flex-col justify-center px-6 py-5 text-white flex-1">
+                                    <span className="text-xs uppercase tracking-widest text-gray-400 mb-2">
+                                        {product.category}
+                                    </span>
+                                    <h3 className="text-xl font-bold leading-tight mb-3">
+                                        {product.name}
                                     </h3>
+                                    <div className="flex items-center gap-3 mb-4">
+                                        <span className="text-sm text-gray-400 line-through">
+                                            ₹ {product.actualPrice}
+                                        </span>
+                                        <span className="text-2xl font-extrabold text-yellow-400">
+                                            ₹ {product.price}
+                                        </span>
+                                    </div>
+                                    <div className="h-px bg-neutral-700 mb-4" />
+                                    <div className="flex items-center justify-between">
+                                        <span className="text-sm text-gray-300">
+                                            Premium {product.fabric}
+                                        </span>
 
-                                    <div className="flex justify-center items-center gap-3 mt-2">
-                                    <span className="text-xs sm:text-sm text-yellow-300 line-through font-medium">
-                                        ₹ {product.actualPrice}
-                                    </span>
-                                    <span className="text-sm sm:text-base text-yellow-400 font-bold">
-                                        ₹ {product.price}
-                                    </span>
+                                        <span className="text-sm font-semibold text-yellow-300 group-hover:translate-x-1 transition">
+                                            View product →
+                                        </span>
                                     </div>
                                 </div>
                             </div>
@@ -107,17 +101,6 @@ export default function SuggestedProducts() {
                     );
                 })}
                 </div>
-                <button
-                    onClick={next}
-                    disabled={page === totalPages - 1}
-                    aria-label="Next products"
-                    className="hidden md:flex items-center justify-center absolute -right-6 top-1/2 -translate-y-1/2 z-10 
-                                h-10 w-10 rounded-full bg-white shadow-lg 
-                                hover:bg-gray-100 transition disabled:opacity-30"
-                >
-                    <FontAwesomeIcon icon={faChevronRight} />
-                </button>
-            </div>
             <div className="flex justify-center gap-2 mt-8">
                 {Array.from({ length: totalPages }).map((_, index) => (
                 <button
