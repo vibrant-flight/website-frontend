@@ -47,60 +47,68 @@ export default function SuggestedProducts() {
         <section className="w-full max-w-7xl mx-auto px-3 sm:px-6 py-10">
             <div className="flex justify-center mb-8">
                 <span className="bg-neutral-900 text-yellow-300 px-6 py-2 rounded-full text-sm sm:text-base font-semibold tracking-wide shadow-md">
-                Continue Exploring
+                    Continue Exploring
                 </span>
             </div>
-            <div className="relative max-w-5xl mx-auto">
+            <div className="relative max-w-5xl mx-auto px-3">
                 {currentProducts.map((product) => {
                     const soldOut =
-                        product.size.S === 0 &&
-                        product.size.M === 0 &&
-                        product.size.L === 0 &&
-                        product.size.XL === 0 &&
-                        product.size.XXL === 0 &&
-                        product.size.XXXL === 0;
+                    product.size.S === 0 &&
+                    product.size.M === 0 &&
+                    product.size.L === 0 &&
+                    product.size.XL === 0 &&
+                    product.size.XXL === 0 &&
+                    product.size.XXXL === 0;
                     return (
                         <Link key={product.itemId} href={`/products/${product.itemId}`}>
-                            <div className="group flex bg-neutral-800 rounded-2xl overflow-hidden shadow-xl hover:shadow-2xl transition min-h-[260px]">
-                                <div className="relative w-[220px] sm:w-[260px] shrink-0">
-                                    {soldOut && (
-                                        <span className="absolute top-3 left-3 z-10 bg-red-600 text-white text-xs px-3 py-1 rounded-full">
-                                            Sold Out
-                                        </span>
-                                    )}
-                                    <Image src={product.image} alt={product.name} fill className="object-fit group-hover:scale-105 transition-transform duration-300"/>
-                                </div>
-                                <div className="flex flex-col justify-center px-6 py-5 text-white flex-1">
-                                    <span className="text-xs uppercase tracking-widest text-gray-400 mb-2">
-                                        {product.category}
+                        <div className="group flex flex-col sm:flex-row bg-neutral-800 rounded-2xl overflow-hidden shadow-xl hover:shadow-2xl transition mb-4">
+                            <div className="relative w-full sm:w-[260px] h-[220px] sm:h-auto shrink-0">
+                                {soldOut && (
+                                <span className="absolute top-3 left-3 z-10 bg-red-600 text-white text-xs px-3 py-1 rounded-full">
+                                    Sold Out
+                                </span>
+                                )}
+
+                                <Image src={product.image} alt={product.name} fill className="object-fit group-hover:scale-105 transition-transform duration-300"
+                                />
+                            </div>
+                        <div className="flex flex-col justify-between px-4 sm:px-6 py-5 text-white flex-1">
+                            <div>
+                                <span className="text-[11px] uppercase tracking-widest text-gray-400">
+                                    {product.category}
+                                </span>
+
+                                <h3 className="text-lg sm:text-xl font-bold leading-snug mt-1 mb-3">
+                                    {product.name}
+                                </h3>
+                                <div className="flex items-center gap-3 mb-4">
+                                    <span className="text-sm text-gray-400 line-through">
+                                    ₹ {product.actualPrice}
                                     </span>
-                                    <h3 className="text-xl font-bold leading-tight mb-3">
-                                        {product.name}
-                                    </h3>
-                                    <div className="flex items-center gap-3 mb-4">
-                                        <span className="text-sm text-gray-400 line-through">
-                                            ₹ {product.actualPrice}
-                                        </span>
-                                        <span className="text-2xl font-extrabold text-yellow-400">
-                                            ₹ {product.price}
-                                        </span>
-                                    </div>
-                                    <div className="h-px bg-neutral-700 mb-4" />
+                                    <span className="text-xl sm:text-2xl font-extrabold text-yellow-400">
+                                    ₹ {product.price}
+                                    </span>
+                                </div>
+                            </div>
+                            <div>
+                                <div className="h-px bg-neutral-700 mb-3" />
                                     <div className="flex items-center justify-between">
                                         <span className="text-sm text-gray-300">
-                                            Premium {product.fabric}
+                                        Premium {product.fabric}
                                         </span>
 
                                         <span className="text-sm font-semibold text-yellow-300 group-hover:translate-x-1 transition">
-                                            View product →
+                                        View →
                                         </span>
                                     </div>
                                 </div>
+
                             </div>
-                        </Link>
+                        </div>
+                    </Link>
                     );
                 })}
-                </div>
+            </div>
             <div className="flex justify-center gap-2 mt-8">
                 {Array.from({ length: totalPages }).map((_, index) => (
                 <button

@@ -3,7 +3,7 @@ import ProductsPage from "@/components/ProductsPage";
 
 export default function Page() {
   return (
-    <Suspense fallback={<div>Loading...</div>}>
+    <Suspense fallback={<div>Loading...</div>}> 
       <ProductsPage />
     </Suspense>
   );

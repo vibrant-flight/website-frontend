@@ -93,7 +93,6 @@ export default function ProductPage() {
                             ) : (
                                 <span className="text-2xl font-bold">₹{(product.price ?? product.actualPrice ?? 0).toFixed(2)}</span>
                             )}
-                            <span className='text-green-500 italic text-2xl'>*Free Delivery</span>
                         </div>
                         <p className="text-gray-200">{product.description}</p>
                         <div className="space-y-4">
