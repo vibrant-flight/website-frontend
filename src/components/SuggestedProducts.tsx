@@ -3,6 +3,7 @@ import { useContext, useEffect, useState } from "react";
 import { AuthContext } from "./AuthProvider";
 import Image from "next/image";
 import { ItemView } from "@/utils/items/itemView";
+import Link from "next/link";
 const ITEMS_PER_PAGE = 1;
 export default function SuggestedProducts() {
   const [products, setProducts] = useState<ItemView[]>([]);
@@ -50,40 +51,42 @@ export default function SuggestedProducts() {
             product.size.XXL === 0 &&
             product.size.XXXL === 0;
           return (
-            <div className="group flex flex-row bg-neutral-800 rounded-2xl shadow-xl hover:shadow-2xl transition mb-4">
-              <div className="relative w-[110px] h-auto sm:w-[260px] shrink-0">
-                {soldOut && (
-                  <span className="absolute top-2 left-2 z-10 bg-red-600 text-white text-[10px] px-2 py-0.5 rounded-full">
-                    Sold Out
-                  </span>
-                )}
-                <Image src={product.image} alt={product.name} fill className="object-fit h-full group-hover:scale-105 transition-transform duration-300" />
-              </div>
-              <div className="flex flex-col justify-between px-3 sm:px-6 py-3 sm:py-5 text-white flex-1">
-                <div>
-                  <span className="text-[10px] sm:text-[11px] uppercase tracking-widest text-gray-400">
-                    {product.category}
-                  </span>
-                  <h3 className="text-sm sm:text-xl font-bold leading-snug mt-1 mb-2">
-                    {product.name}
-                  </h3>
-                  <div className="flex items-center gap-2 mb-2 sm:mb-4">
-                    <span className="text-xs sm:text-sm text-gray-400 line-through">
-                      ₹ {product.actualPrice}
+            <Link key={product.itemId} href={`/products/${product.itemId}`}>
+              <div className="group flex flex-row bg-neutral-800 rounded-2xl shadow-xl hover:shadow-2xl transition mb-4">
+                <div className="relative w-[110px] h-auto sm:w-[260px] shrink-0">
+                  {soldOut && (
+                    <span className="absolute top-2 left-2 z-10 bg-red-600 text-white text-[10px] px-2 py-0.5 rounded-full">
+                      Sold Out
                     </span>
-                    <span className="text-lg sm:text-2xl font-extrabold text-yellow-400">
-                      ₹ {product.price}
+                  )}
+                  <Image src={product.image} alt={product.name} fill className="object-fit h-full group-hover:scale-105 transition-transform duration-300" />
+                </div>
+                <div className="flex flex-col justify-between px-3 sm:px-6 py-3 sm:py-5 text-white flex-1">
+                  <div>
+                    <span className="text-[10px] sm:text-[11px] uppercase tracking-widest text-gray-400">
+                      {product.category}
+                    </span>
+                    <h3 className="text-sm sm:text-xl font-bold leading-snug mt-1 mb-2">
+                      {product.name}
+                    </h3>
+                    <div className="flex items-center gap-2 mb-2 sm:mb-4">
+                      <span className="text-xs sm:text-sm text-gray-400 line-through">
+                        ₹ {product.actualPrice}
+                      </span>
+                      <span className="text-lg sm:text-2xl font-extrabold text-yellow-400">
+                        ₹ {product.price}
+                      </span>
+                    </div>
+                  </div>
+                  <div>
+                    <div className="h-px bg-neutral-700 mb-2 sm:mb-3" />
+                    <span className="text-xs sm:text-sm text-gray-300">
+                      Premium {product.fabric}
                     </span>
                   </div>
                 </div>
-                <div>
-                  <div className="h-px bg-neutral-700 mb-2 sm:mb-3" />
-                  <span className="text-xs sm:text-sm text-gray-300">
-                    Premium {product.fabric}
-                  </span>
-                </div>
               </div>
-            </div>
+            </Link>
           );
         })}
       </div>
