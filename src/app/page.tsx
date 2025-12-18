@@ -12,6 +12,7 @@ const images = [
   '/carousel/2.png',
   '/carousel/3.png',
   '/carousel/4.png',
+  '/carousel/5.png',
 ]
 export default function Home() {
   const [products,setProducts] = useState<ItemView[]>([] as ItemView[]);
@@ -49,7 +50,8 @@ export default function Home() {
           email:auth.userData.email,
         })
       });
-    } catch (err) {
+    } 
+    catch (err) {
       console.error("Click tracking failed", err);
     }
   }
@@ -66,7 +68,7 @@ export default function Home() {
         ))}
       </Carousel>
       <SuggestedProducts />
-      <div className="bg-neutral-800 w-fit mx-auto my-5 text-yellow-300 text-center rounded-full px-6 font-bold">
+      <div className="bg-neutral-800 w-fit mx-auto my-5 font-[arial-black] text-yellow-300 text-center rounded-full px-6 font-bold">
         DROP I Live NOW
       </div>
       <div className="flex flex-row justify-evenly overflow-x-auto gap-4 py-2 px-2 md:justify-evenly scrollbar-hide">
