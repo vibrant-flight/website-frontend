@@ -28,7 +28,9 @@ export default function Navbar() {
       <div className="bg-neutral-900 font-[interblack] border-neutral-700">
         <div className="flex flex-row justify-between items-center md:hidden">
           <div className="flex items-center">
-            <Image src="/logo.png" width={100} height={100} className="w-10" alt="Logo" />
+            <Link href={"/"}>
+              <Image src="/logo.png" width={100} height={100} className="w-10" alt="Logo" />
+            </Link>
           </div>
           <div className="flex items-center">
             <Image src="/banner.png" alt="banner" width={200} height={200} />

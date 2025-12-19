@@ -6,6 +6,7 @@ import { redirect, useParams } from 'next/navigation';
 import { useRouter } from 'next/navigation';
 export default function ProductPage() {
     const [product, setProduct] = useState<ItemView>({} as ItemView);
+    const [isLoading,setIsLoading]=useState<boolean>();
     const router = useRouter();
     const [selectedProduct,setSelectedProduct] = useState({
         itemId:product.itemId,
@@ -16,20 +17,25 @@ export default function ProductPage() {
     const imageList = [product.image,product.image1,product.image2,product.image3].filter((img) => typeof img === "string" && img.trim() !== "");
     const [selectedImage, setSelectedImage] = useState<number>(0);
     useEffect(() => {
+        setIsLoading(true);
         fetch(`${process.env.NEXT_PUBLIC_BACKEND_URL}/api/items/${productId}`,{method:"GET",headers:{"content-type":"application/json"}}).then((res)=>{
             if(res.ok) {
                 res.json().then((data)=>{
                     setProduct(data);
                     setSelectedProduct((prev)=>({
-                        ...prev,
-                        itemId:data.itemId
+                    ...prev,
+                    itemId:data.itemId
                     }))
-                })
+                    setIsLoading(false);
+                });
             }
             else {
                 router.back();
+                setIsLoading(false);
             }
-        })
+        }).catch(() => {
+            setIsLoading(false);
+        });
     }, [productId]);
     const addTocart = () => {
         if(selectedProduct.quantity>0) {
@@ -63,6 +69,50 @@ export default function ProductPage() {
         else {
             alert("please select quantity");
         }
+    }
+    if(isLoading) {
+       return (
+            <div className="min-h-screen bg-gray-900 text-gray-100 animate-pulse">
+                <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
+                    <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
+                        <div className="space-y-4">
+                            <div className="relative aspect-square rounded-lg bg-gray-800" />
+
+                            <div className="grid grid-cols-4 gap-4">
+                            {[1, 2, 3, 4].map((i) => (
+                                <div
+                                key={i}
+                                className="relative aspect-square rounded-md bg-gray-800"
+                                />
+                            ))}
+                            </div>
+                        </div>
+                        <div className="space-y-6">
+                            <div className="h-8 bg-gray-700 rounded w-3/4"></div>
+                            <div className="h-6 bg-gray-700 rounded w-1/2"></div>
+                            <div className="space-y-3">
+                                <div className="h-4 bg-gray-700 rounded w-full"></div>
+                                <div className="h-4 bg-gray-700 rounded w-5/6"></div>
+                                <div className="h-4 bg-gray-700 rounded w-4/6"></div>
+                            </div>
+                            <div>
+                            <div className="h-5 bg-gray-700 rounded w-20 mb-3"></div>
+                                <div className="flex gap-2">
+                                    {[1, 2, 3, 4, 5].map((i) => (
+                                    <div key={i} className="h-10 w-16 bg-gray-800 rounded"></div>
+                                    ))}
+                                </div>
+                            </div>
+                            <div className="space-y-2">
+                            <div className="h-5 bg-gray-700 rounded w-24"></div>
+                            <div className="h-10 bg-gray-800 rounded w-40"></div>
+                            </div>
+                            <div className="h-12 rounded-md bg-yellow-700 w-full"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        );
     }
     return (
         <div className="min-h-screen bg-neutral-800 text-gray-100">

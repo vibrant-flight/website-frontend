@@ -16,8 +16,10 @@ const images = [
 ]
 export default function Home() {
   const [products,setProducts] = useState<ItemView[]>([] as ItemView[]);
+  const [isLoading,setIsLoading] = useState<boolean>(false);
   const auth = useContext(AuthContext);
   const loadProducts = (isInitial = false) => {
+    setIsLoading(true);
     fetch(`${process.env.NEXT_PUBLIC_BACKEND_URL}/get-items`, {
         method: 'GET',
         headers: { 'Content-Type': 'application/json' },
@@ -34,7 +36,7 @@ export default function Home() {
           ));
         }
       }
-    }).catch((err) => console.log("Error:", err));
+    }).catch((err) => console.log("Error:", err)).finally(()=>setIsLoading(false));
   };
   const trackProductClick = async(productId:string) => {
     try {
@@ -103,35 +105,66 @@ export default function Home() {
           OverSized T's
         </div>
       </div>
-      <div className="m-auto grid gap-6 w-full max-w-7xl grid-cols-2 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5">
-        {products && products.length > 0 ? (
-          products.map((product) => (
-              <Link key={product.itemId} onClick={() => trackProductClick(product.itemId)} href={`/products/${product.itemId}`}>
-                  <div className="group flex flex-col items-center bg-neutral-700 rounded-xl shadow-xl overflow-hidden w-full transition hover:scale-[1.03] aspect-auto">
-                      <div className="relative w-full h-44 md:h-52 lg:h-56 xl:h-60 overflow-hidden">
-                        {product.size.S==0 && product.size.M==0 && product.size.L==0 && product.size.XL==0 && product.size.XL==0 && product.size.XXXL==0 ? 
-                          (
-                            <span className="absolute top-2 right-2 z-20 px-3 py-1 text-xs font-bold rounded-full bg-red-700 text-white shadow-md">Sold Out</span>
-                          ):(<></>)
-                        }
-                        <Image src={product.image} alt={product.name} loading="lazy" fill className="object-fit w-full h-full transition group-hover:scale-[1.08]" />
-                      </div>
-                      <div className="bg-neutral-600 text-white w-full text-center px-2 py-3">
-                        <h3 className="text-base font-bold truncate">{product.name}</h3>
-                        <div className="flex flex-row gap-3 justify-center mt-2">
-                            <p className="text-sm line-through font-bold text-yellow-300">₹ {product.actualPrice}</p>
-                            <p className="text-sm font-bold text-yellow-400">₹ {product.price}</p>
-                        </div>
-                      </div>
+      {isLoading ? (
+        <>
+          <div className="m-auto grid gap-6 w-full max-w-7xl grid-cols-2 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5">
+            {Array.from({ length: 10 }).map((_, i) => (
+              <div key={i} className="flex flex-col items-center bg-neutral-700 rounded-xl shadow-xl overflow-hidden w-full animate-pulse">
+                <div className="w-full h-44 md:h-52 lg:h-56 xl:h-60 bg-neutral-600" />
+                <div className="bg-neutral-600 w-full px-3 py-4">
+                  <div className="h-4 bg-neutral-500 rounded w-3/4 mx-auto mb-3" />
+                  <div className="flex justify-center gap-3">
+                    <div className="h-3 bg-neutral-500 rounded w-12" />
+                    <div className="h-3 bg-neutral-500 rounded w-12" />
                   </div>
-              </Link>
-          ))
-        ) : (
-          <div className="text-center col-span-full text-neutral-300 w-full py-10 text-xl font-semibold">
-            Coming Soon
+                </div>
+              </div>
+            ))}
           </div>
-        )}
-      </div>
+          <div className="flex justify-center mt-10">
+            <div className="w-40 h-12 bg-neutral-600 rounded-full animate-pulse" />
+          </div>
+        </>
+      ):(
+        <>
+          <div className="m-auto grid gap-6 w-full max-w-7xl grid-cols-2 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5">
+            {products && products.length > 0 ? (
+              products.map((product) => (
+                <Link key={product.itemId} onClick={() => trackProductClick(product.itemId)} href={`/products/${product.itemId}`}>
+                  <div className="group flex flex-col items-center bg-neutral-700 rounded-xl shadow-xl overflow-hidden w-full transition hover:scale-[1.03] aspect-auto">
+                    <div className="relative w-full h-44 md:h-52 lg:h-56 xl:h-60 overflow-hidden">
+                      {product.size.S==0 && product.size.M==0 && product.size.L==0 && product.size.XL==0 && product.size.XL==0 && product.size.XXXL==0 ? 
+                        (
+                          <span className="absolute top-2 right-2 z-20 px-3 py-1 text-xs font-bold rounded-full bg-red-700 text-white shadow-md">Sold Out</span>
+                        ):(<></>)
+                      }
+                      <Image src={product.image} alt={product.name} loading="lazy" fill className="object-fit w-full h-full transition group-hover:scale-[1.08]" />
+                    </div>
+                    <div className="bg-neutral-600 text-white w-full text-center px-2 py-3">
+                      <h3 className="text-base font-bold truncate">{product.name}</h3>
+                      <div className="flex flex-row gap-3 justify-center mt-2">
+                        <p className="text-sm line-through font-bold text-yellow-300">₹ {product.actualPrice}</p>
+                        <p className="text-sm font-bold text-yellow-400">₹ {product.price}</p>
+                      </div>
+                    </div>
+                  </div>
+                </Link>
+              ))
+            ) : (
+              <div className="text-center col-span-full text-neutral-300 w-full py-10 text-xl font-semibold">
+                Coming Soon
+              </div>
+            )}
+          </div>
+          <div className="flex justify-center mt-10">
+            <Link href="/products">
+              <button className="px-8 py-3 rounded-full bg-yellow-400 hover:cursor-pointer m-5 text-black font-bold hover:bg-yellow-300 transition shadow-lg">
+                View More
+              </button>
+            </Link>
+          </div>
+        </>
+      )}
     </>
   )
 } 
