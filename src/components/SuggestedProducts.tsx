@@ -8,15 +8,15 @@ const ITEMS_PER_PAGE = 1;
 export default function SuggestedProducts() {
   const [products, setProducts] = useState<ItemView[]>([]);
   const [page, setPage] = useState(0);
-  const [isLoading,setIsLoading] = useState<boolean>(false);
+  const [isLoading,setIsLoading] = useState<boolean>(true);
   const auth = useContext(AuthContext);
   useEffect(() => {
     auth.getData();
   }, []);
   useEffect(() => {
     if(auth.userData === undefined) return;
-      fetchProducts();
-    }, [auth.userData]);
+    fetchProducts();
+  }, [auth.userData?.email]);
   const fetchProducts = async () => {
     setIsLoading(true);
     try {
@@ -87,7 +87,9 @@ export default function SuggestedProducts() {
       </section>
     );
   }
-  if(!products.length) return null;
+  if(!isLoading && products.length === 0) {
+    return null;
+  }
   return (
     <section className="w-full max-w-7xl mx-auto px-3 sm:px-6 py-10">
       <div className="flex justify-center mb-8">
