@@ -115,7 +115,7 @@ export default function SuggestedProducts() {
                       Sold Out
                     </span>
                   )}
-                  <Image src={product.image} alt={product.name} fill className="object-fit h-full group-hover:scale-105 transition-transform duration-300" />
+                  <Image src={product.image} alt={product.name} width={200} height={200} className="object-fit h-full group-hover:scale-105 transition-transform duration-300" />
                 </div>
                 <div className="flex flex-col justify-between px-3 sm:px-6 py-3 sm:py-5 text-white flex-1">
                   <div>
