@@ -1,10 +1,10 @@
 "use client";
-import { useEffect, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import { useSearchParams, useRouter } from "next/navigation";
 import Link from "next/link";
 import { ItemView } from "@/utils/items/itemView";
 import Image from "next/image";
-
+import { AuthContext } from "./AuthProvider";
 export default function Products() {
     const location = useSearchParams();
     const router = useRouter();
@@ -12,6 +12,7 @@ export default function Products() {
     const [products, setProducts] = useState<ItemView[]>([]);
     const [isLoading, setIsLoading] = useState(false);
     const [page, setPage] = useState(1);
+    const auth = useContext(AuthContext)
     const [hasMore, setHasMore] = useState(true);
     useEffect(() => {
         setProducts([]);
@@ -60,7 +61,25 @@ export default function Products() {
         if (catKey === "all") router.push("/products");
         else router.push(`/products?category=${encodeURIComponent(catKey)}`);
     }
-
+    const trackProductClick = async(productId:string) => {
+        try {
+            await auth.getData();
+            await fetch(`${process.env.NEXT_PUBLIC_BACKEND_URL}/api/users/track/product-click`, {
+                method: "POST",
+                headers: {
+                "Content-Type": "application/json"
+                },
+                credentials: "include", 
+                body: JSON.stringify({
+                productId,
+                email:auth.userData.email,
+                })
+            });
+        } 
+        catch (err) {
+            console.error("Click tracking failed", err);
+        }
+    }
     return (
         <div className="bg-neutral-800 flex">
             <main className="flex-1 flex flex-col items-center px-4 py-6 z-0 w-full">
@@ -100,7 +119,7 @@ export default function Products() {
                         ))
                     ) : products?.length > 0 ? (
                         products.map((product) => (
-                            <Link key={product.itemId} href={`/products/${product.itemId}`}>
+                            <Link key={product.itemId} onClick={()=>trackProductClick(product.itemId)} href={`/products/${product.itemId}`}>
                                 <div className="group flex flex-col bg-neutral-700 rounded-xl shadow-xl overflow-hidden w-full transition hover:scale-[1.03] aspect-auto">
                                     <div className="relative w-full h-44 md:h-52 lg:h-56 xl:h-60 overflow-hidden">
                                         {product.size.S==0 && product.size.M==0 && product.size.L==0 && product.size.XL==0 && product.size.XL==0 && product.size.XXXL==0 ? 
