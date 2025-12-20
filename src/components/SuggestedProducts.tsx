@@ -8,6 +8,7 @@ const ITEMS_PER_PAGE = 1;
 export default function SuggestedProducts() {
   const [products, setProducts] = useState<ItemView[]>([]);
   const [page, setPage] = useState(0);
+  const [isLoading,setIsLoading] = useState<boolean>(false);
   const auth = useContext(AuthContext);
   useEffect(() => {
     auth.getData();
@@ -17,23 +18,82 @@ export default function SuggestedProducts() {
       fetchProducts();
     }, [auth.userData]);
   const fetchProducts = async () => {
-    const res = await fetch(`${process.env.NEXT_PUBLIC_BACKEND_URL}/items/suggested`,{
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify({
-        email:auth.userData.email,
-      }),
-      credentials: "include",
-    });
-    const data = await res.json();
-    setProducts(data.products || []);
+    setIsLoading(true);
+    try {
+      const res = await fetch(`${process.env.NEXT_PUBLIC_BACKEND_URL}/items/suggested`,{
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          email:auth.userData.email,
+        }),
+        credentials: "include",
+      });
+      const data = await res.json();
+      setProducts(data.products || []);
+    }
+    catch(err) {
+      console.log(err);
+    }
+    finally {
+      setIsLoading(false);
+    }
   }
   const totalPages = Math.ceil(products.length / ITEMS_PER_PAGE);
   const start = page * ITEMS_PER_PAGE;
   const currentProducts = products.slice(start, start + ITEMS_PER_PAGE);
-  if (!products.length) return null;
+  if(isLoading) {
+    return (
+      <section className="w-full max-w-7xl mx-auto px-3 sm:px-6 py-10">
+        <div className="flex justify-center mb-8">
+          <span className="bg-neutral-900 text-neutral-700 px-6 py-2 rounded-full text-sm sm:text-base animate-pulse">
+            Continue Exploring
+          </span>
+        </div>
+
+        <div className="relative max-w-5xl mx-auto px-3 space-y-4">
+          {Array.from({ length: 3 }).map((_, i) => (
+            <div
+              key={i}
+              className="flex flex-row bg-neutral-800 rounded-2xl shadow-xl mb-4 overflow-hidden animate-pulse"
+            >
+              {/* Image Skeleton */}
+              <div className="w-[110px] sm:w-[260px] bg-neutral-700 h-[140px] sm:h-[200px]" />
+
+              {/* Content Skeleton */}
+              <div className="flex flex-col justify-between px-3 sm:px-6 py-3 sm:py-5 flex-1">
+                <div>
+                  <div className="h-3 w-20 bg-neutral-700 rounded mb-2" />
+                  <div className="h-4 sm:h-6 w-3/4 bg-neutral-600 rounded mb-3" />
+                  <div className="flex gap-2 items-center">
+                    <div className="h-3 w-14 bg-neutral-700 rounded" />
+                    <div className="h-5 w-20 bg-neutral-600 rounded" />
+                  </div>
+                </div>
+
+                <div>
+                  <div className="h-px bg-neutral-700 my-3" />
+                  <div className="h-3 w-32 bg-neutral-700 rounded" />
+                </div>
+              </div>
+            </div>
+          ))}
+        </div>
+
+        {/* Pagination Skeleton */}
+        <div className="flex justify-center gap-2 mt-8">
+          {Array.from({ length: 4 }).map((_, i) => (
+            <div
+              key={i}
+              className="h-2.5 w-2.5 bg-neutral-700 rounded-full animate-pulse"
+            />
+          ))}
+        </div>
+      </section>
+    );
+  }
+  if(!products.length) return null;
   return (
     <section className="w-full max-w-7xl mx-auto px-3 sm:px-6 py-10">
       <div className="flex justify-center mb-8">
