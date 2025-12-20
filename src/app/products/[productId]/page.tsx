@@ -55,7 +55,7 @@ export default function ProductPage() {
                     }
                     else {
                         res.json().then((data)=>{
-                            if(data.loginStatus) {
+                            if(data.loginStatus && data.loginStatus==false) {
                                 router.push("/login");
                             }
                             else {
