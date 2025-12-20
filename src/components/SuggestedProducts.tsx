@@ -53,11 +53,7 @@ export default function SuggestedProducts() {
         </div>
 
         <div className="relative max-w-5xl mx-auto px-3 space-y-4">
-          {Array.from({ length: 3 }).map((_, i) => (
-            <div
-              key={i}
-              className="flex flex-row bg-neutral-800 rounded-2xl shadow-xl mb-4 overflow-hidden animate-pulse"
-            >
+            <div className="flex flex-row bg-neutral-800 rounded-2xl shadow-xl mb-4 overflow-hidden animate-pulse">
               {/* Image Skeleton */}
               <div className="w-[110px] sm:w-[260px] bg-neutral-700 h-[140px] sm:h-[200px]" />
 
@@ -71,14 +67,12 @@ export default function SuggestedProducts() {
                     <div className="h-5 w-20 bg-neutral-600 rounded" />
                   </div>
                 </div>
-
                 <div>
                   <div className="h-px bg-neutral-700 my-3" />
                   <div className="h-3 w-32 bg-neutral-700 rounded" />
                 </div>
               </div>
             </div>
-          ))}
         </div>
 
         {/* Pagination Skeleton */}
