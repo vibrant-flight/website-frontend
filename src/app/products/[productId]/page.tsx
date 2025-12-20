@@ -55,7 +55,12 @@ export default function ProductPage() {
                     }
                     else {
                         res.json().then((data)=>{
-                            alert(data.errorMessage);
+                            if(data.loginStatus) {
+                                router.push("/login");
+                            }
+                            else {
+                                alert(data.errorMessage);
+                            }
                         })
                     }
                 }).catch((err)=>{
