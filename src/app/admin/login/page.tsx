@@ -45,12 +45,12 @@ export default function AdminLogin() {
             body: JSON.stringify(adminData)
         }).then(async(res)=>{
             if(res.ok) {
-            adminAuth.getData();
-            router.push("admin/orders");
+                adminAuth.getData();
+                router.push("/admin/orders");
             }
             else {
-            let data = await res.json();
-            setErrorBackend(data.errorMessage);
+                let data = await res.json();
+                setErrorBackend(data.errorMessage);
             }
         }).catch(async(err)=>{
             const msg = await err?.text?.();
