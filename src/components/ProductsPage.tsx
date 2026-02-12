@@ -37,7 +37,7 @@ export default function Products() {
                         arr.findIndex(x => x.itemId === v.itemId) === i
                     ));
                 }
-                if (newProducts.length === 0 || newProducts.length < 8) {
+                if (newProducts.length === 0 || newProducts.length < 10) {
                     setHasMore(false);
                 }
             }
