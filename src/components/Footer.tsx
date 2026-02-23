@@ -51,7 +51,7 @@ export default function Footer() {
       </div>
       <div className="mt-12 pt-6 border-t border-gray-800 text-center text-sm text-gray-400">
         <p>
-          © 2025 Vibrant Flight — All rights reserved · Privacy Policy · Refund Policy · Terms & Conditions · <Link href="https://www.linkedin.com/in/vennachandrasekhar" target="_blank">Developed by Chandra Sekhar</Link>
+          © 2025 Vibrant Flight — All rights reserved · Privacy Policy · Refund Policy · Terms & Conditions · <Link href="https://www.venomai.in" target="_blank">Developed by Venomai</Link>
         </p>
       </div>
     </footer>
